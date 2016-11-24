@@ -19,7 +19,6 @@ void setup()
 	Serial.begin(9600);
 	while (!Serial)
 		;
-	Serial.println("ON");
 }
 
 static uint8_t status;
