@@ -193,13 +193,10 @@ uint8_t MFRC522::piccAnticoll(uint8_t cascadeLv, uint8_t *sn)
 	} while (((--loop) > 0) && (status == STATUS_COLLISION));
 
 	if (status == STATUS_OK) {
-//		printf("sn in Anticollision: ");
 		for (int out = 0; out < 4; ++out) {
 			sn[out] = buff[out];
 			sn_BCC ^= buff[out];
-//			printf("%02x ", sn[out]);
 		}
-//		printf(", BCC: %02x, buff[4]: %02x\n", sn_BCC, buff[4]);
 		if (sn_BCC != buff[4])
 			status = STATUS_ERROR;
 	}
