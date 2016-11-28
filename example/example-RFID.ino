@@ -27,7 +27,7 @@ static uint8_t sn[MAXRLEN], snBytes;
 
 void loop()
 {
-	delay(500);
+	delay(200);
 	if ((status = rfid.findTag(&card_type)) == STATUS_OK) {
 		Serial.print("OK! ");
 		Serial.println(card_type);
@@ -35,9 +35,8 @@ void loop()
 			for (int i = 0; i < snBytes; ++i)
 				Serial.print(sn[i], HEX);
 			Serial.println();
+			rfid.piccHalt();
 		}
-	} else {
-		Serial.print("Sad... Error ID: ");
-		Serial.println(status);
-	}
+	} else
+		Serial.println("No tag.");
 }
