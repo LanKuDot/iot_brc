@@ -5,7 +5,7 @@
  * Modified by LanKuDot <airlanser@gmail.com>.
  * 8th Nov., 2016
  */
-/* The API for accessing the RFID via MFRC522
+/* The API for accessing the RFID via MF-RC522
  */
 #ifndef _RFID_H_
 #define _RFID_H_
@@ -50,7 +50,7 @@ class RFID : public MFRC522
 		/**
 		 * @brief Read the serial number of the tag
 		 * @param sn [out] The buffer for storing the serial number. At least 4 bytes.
-		 * @param snBytes [out] The vaild first n bytes in the <tt>sn</tt>.
+		 * @param snBytes [out] The vaild bytes in the <tt>sn</tt>.
 		 * @return STATUS_OK, if successfully read the serial number.
 		 */
 		uint8_t readTagSN(uint8_t *sn, uint8_t *snBytes);

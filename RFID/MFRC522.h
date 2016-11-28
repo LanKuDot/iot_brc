@@ -5,7 +5,7 @@
  * Modified by LanKuDot <airlanser@gmail.com>.
  * 8th Nov., 2016
  */
-/* The library for communicating the MFRC522 module via SPI.
+/* The library for communicating the MF-RC522 module via SPI.
  */
 #ifndef _MFRCC522_H_
 #define _MFRCC522_H_
@@ -189,6 +189,17 @@ class MFRC522
 		 * @retval STATUS_PCD_NO_RESPONSE Something went wrong on RC522.
 		 */
 		uint8_t commWithPICC(uint8_t cmd, uint8_t *inBuf, uint8_t inBytes, uint8_t *outBuf, uint8_t *outBits);
+
+		/**
+		 * @brief Ask PCD to calculate the CRC code.
+		 *
+		 * The PCD will calculate the CRC code from the <tt>inBuf</tt>, and
+		 * the 2-byte result will be stored to <tt>outBuf</tt>.
+		 *
+		 * @param inBuf The pointer to a buffer storing the data to be calculated.
+		 * @param inBytes The data length of <tt>inBuf</tt> in bytes.
+		 * @param outBuf [out] The pointer to a buffer to store 2-byte CRC result.
+		 */
 		void calculateCRC(uint8_t *inBuf, uint8_t inBytes, uint8_t *outBuf);
 
 		/**
@@ -212,7 +223,7 @@ class MFRC522
 		/**
 		 * @brief Read a register value of RC522.
 		 * @param regAddr Specify the address of a register.
-		 * @return The value of the specified register.
+		 * @return The value in the specified register.
 		 */
 		uint8_t pcdReadReg(uint8_t regAddr);
 		/**
@@ -223,7 +234,14 @@ class MFRC522
 		void pcdWriteReg(uint8_t regAddr, uint8_t value);
 		/** @} */
 
+		/**
+		 * @brief The pin number which is connected to the SS pin of MF-RC522 module.
+		 */
 		int _selectPin;
+
+		/**
+		 * @brief The pin number which is connected to the reset pin of MF-RC522 module.
+		 */
 		int _resetPowerDownPin;
 };
 
