@@ -1,4 +1,4 @@
-/**
+/*
  * Modified from repo https://code.google.com/archive/p/rpi-rc522/
  * to make it able to be used on Arduino.
  *
@@ -73,7 +73,7 @@ class MFRC522
 		 * @brief Constructor of class MFRC522
 		 *
 		 * The constructor stores the select pin and reset\_power\_down pin
-		 * of the MF-RC522 for futher usage.</br>
+		 * of the MF-RC522 for futher usage.<br />
 		 *
 		 * @param selectPin Specify the pin number of Arduino which is connected to SS pin of the MF-RC522 module.
 		 * @param resetPowerDownPin Specify the pin number of Arduino which is connected to the reset pin of the MF-RC522 module.
@@ -86,7 +86,7 @@ class MFRC522
 		 * @brief Make the MF-RC522 start operating.
 		 *
 		 * The function will generate a positive edge at <tt>resetPowerDownPin</tt>
-		 * and delay 100 ms to wake up the MF-RC522 module.</br>
+		 * and delay 100 ms to wake up the MF-RC522 module.<br />
 		 * Then call <tt>pcdReset()</tt> and <tt>pcdInit()</tt> to set up the module.
 		 *
 		 * @sa MFRC522::pcdReset(), MFRC522::pcdInit().
@@ -101,7 +101,7 @@ class MFRC522
 		/**
 		 * @brief Initialize and config the RC522.
 		 * Set the reading timeout to 25 ms, enable 100% ASK (Amplitude Shift Keying),
-		 * and select 6363h as CRC preset value.</br>
+		 * and select 6363h as CRC preset value.<br />
 		 * Then, call <tt>pcdAntennaOn()</tt> to active the antenna.
 		 *
 		 * @sa MFRC522::pcdAntennaOn()
@@ -120,7 +120,7 @@ class MFRC522
 
 		/**
 		 * @brief Send a request command from PCD to the PICC, and receive the 2-byte ATQA from the PICC.
-		 * The function will call <tt>commWithPICC()</tt> to send the data.</br>
+		 * The function will call <tt>commWithPICC()</tt> to send the data.<br />
 		 *
 		 * The <tt>req_cmd</tt> could be PICC_REQIDL,
 		 * which RC522 will get response from cards that are not in halt state, or,
@@ -137,7 +137,7 @@ class MFRC522
 		/**
 		 * @brief Get a byte of CLn (cascade level n) UID from one PICC.
 		 *
-		 * Note that this function should be called before <tt>piccSelect()</tt>.</br>
+		 * Note that this function should be called before <tt>piccSelect()</tt>.<br />
 		 * The function will call <tt>commWithPICC()</tt> to send the data.
 		 *
 		 * @param cascadeLv The cascade level

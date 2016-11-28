@@ -1,4 +1,4 @@
-/**
+/*
  * Modified from repo https://code.google.com/archive/p/rpi-rc522/
  * to make it able to be used on Arduino.
  *
