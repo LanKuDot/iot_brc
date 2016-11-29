@@ -34,7 +34,7 @@ bool KSM111_ESP8266::begin()
 		*ch++ = _serial.read();
 	}
 	*ch = '\0';
-	DEBUG_STR(ch);
+	DEBUG_STR(_buff);
 
 	/* Response: "OK"
 	 */
@@ -60,7 +60,7 @@ bool KSM111_ESP8266::softReset()
 		*ch++ = _serial.read();
 	}
 	*ch = '\0';
-	DEBUG_STR(ch);
+	DEBUG_STR(_buff);
 
 	/* Response: "AT+RST
 	 *          \nOK
@@ -78,14 +78,14 @@ bool KSM111_ESP8266::setMode(uint8_t mode)
 	char *ch = _buff;
 
 	sprintf(ch, "AT+CWMODE=%d", mode);
-	DEBUG_STR(ch);
+	DEBUG_STR(_buff);
 	_serial.println(ch);
 	delay(500);
 	while (_serial.available()) {
 		*ch++ = _serial.read();
 	}
 	*ch = '\0';
-	DEBUG_STR(ch);
+	DEBUG_STR(_buff);
 
 	/* Response "AT+CWMODE=<mode>
 	 *         \nOK" */
@@ -106,7 +106,7 @@ uint8_t KSM111_ESP8266::getMode()
 		*ch++ = _serial.read();
 	}
 	*ch = '\0';
-	DEBUG_STR(ch);
+	DEBUG_STR(_buff);
 
 	/* Response: "AT+CWMODE?
 	 *            +CWMODE:<mode>
@@ -198,7 +198,7 @@ bool KSM111_ESP8266::joinAP(const char *ssid, const char *passwd)
 			*ch++ = _serial.read();
 		}
 		*ch = '\0';
-		DEBUG_STR(ch);
+		DEBUG_STR(_buff);
 
 		if (strstr(_buff, "OK"))
 			return true;
@@ -221,7 +221,7 @@ void KSM111_ESP8266::quitAP()
 		*ch++ = _serial.read();
 	}
 	*ch = '\0';
-	DEBUG_STR(ch);
+	DEBUG_STR(_buff);
 }
 
 bool KSM111_ESP8266::multiConnect(bool mode)
@@ -237,7 +237,7 @@ bool KSM111_ESP8266::multiConnect(bool mode)
 		*ch++ = _serial.read();
 	}
 	*ch = '\0';
-	DEBUG_STR(ch);
+	DEBUG_STR(_buff);
 
 	if (strstr(_buff, "OK"))
 		return true;
@@ -258,7 +258,7 @@ uint8_t KSM111_ESP8266::beginClient(const char *type, const char *ip, const int 
 		*ch++ = _serial.read();
 	}
 	*ch = '\0';
-	DEBUG_STR(ch);
+	DEBUG_STR(_buff);
 
 	if (strstr(_buff, "OK"))
 		return CONNECT_OK;
@@ -280,7 +280,7 @@ bool KSM111_ESP8266::endClient()
 		*ch++ = _serial.read();
 	}
 	*ch = '\0';
-	DEBUG_STR(ch);
+	DEBUG_STR(_buff);
 
 	if (strstr(_buff, "CLOSED"))
 		return true;
@@ -309,7 +309,7 @@ void KSM111_ESP8266::getIP(uint8_t mode, char *ip)
 		*ch++ = _serial.read();
 	}
 	*ch = '\0';
-	DEBUG_STR(ch);
+	DEBUG_STR(_buff);
 
 	// Parse IP
 	if (strstr(_buff, "OK")) {
@@ -347,7 +347,7 @@ bool KSM111_ESP8266::puts(const char *msg)
 			*ch++ = _serial.read();
 			if (*(ch-1) == '\n') {
 				*ch = '\0';
-				DEBUG_STR(ch);
+				DEBUG_STR(_buff);
 
 				if (strstr(_buff, "SEND OK"))
 					return true;
@@ -374,7 +374,7 @@ int8_t KSM111_ESP8266::gets(char * const msg, unsigned int buffLen)
 		*ch++ = _serial.read();
 	}
 	*ch = '\0';
-	DEBUG_STR(ch);
+	DEBUG_STR(_buff);
 
 	// Not the vaild received message
 	if (!strstr(_buff, "+IPD"))
