@@ -360,6 +360,7 @@ bool KSM111_ESP8266::puts(const char *msg)
 	if (!strstr(_buff, ">")) {
 		return false;
 	}
+	DEBUG_STR(_buff);
 
 	_serial.println(msg);
 	while (1) {
@@ -367,6 +368,7 @@ bool KSM111_ESP8266::puts(const char *msg)
 
 		while (_serial.available()) {
 			*ch++ = _serial.read();
+			delay(10);
 			if (*(ch-1) == '\n') {
 				*ch = '\0';
 				DEBUG_STR(_buff);
@@ -394,6 +396,7 @@ int8_t KSM111_ESP8266::gets(char * const msg, unsigned int buffLen)
 	// +IPD,<id>,<msgLen>:<data> in MULTIPLE mode
 	while (_serial.available()) {
 		*ch++ = _serial.read();
+		delay(10);
 	}
 	*ch = '\0';
 	DEBUG_STR(_buff);
