@@ -47,9 +47,10 @@ class KSM111_ESP8266 {
 		/**
 		 * @brief Set the buadrate of <tt>_serial</tt> to 115200.
 		 *        It takes 5 seoncds to wake up the wifi module.
+		 * @param baudrate Specify the baudrate of SoftwareSerial.
 		 * @return true if the module is successfully waked up.
 		 */
-		bool begin();
+		bool begin(long baudrate);
 
 		/**
 		 * @brief Close the connection of SoftwareSerial.
@@ -75,6 +76,17 @@ class KSM111_ESP8266 {
 		 * @return The operating mode
 		 */
 		uint8_t getMode();
+
+		/**
+		 * @brief Set the default UART baudrate of the module.
+		 *
+		 * Note that resetting the module cannot reset the baudrate.<br />
+		 * If the new baudrate is successfully set, the baudrate of SoftwareSerial will also be set to the new baudrate.
+		 *
+		 * @param baudrate The baudrate to be set.
+		 * @return true if the module responses "OK".
+		 */
+		bool setBaudrate(long baudrate);
 
 		/**
 		 * @name Access point operations

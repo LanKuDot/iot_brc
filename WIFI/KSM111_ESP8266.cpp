@@ -11,7 +11,7 @@
  #define DEBUG_STR(X)
 #endif
 
-bool KSM111_ESP8266::begin()
+bool KSM111_ESP8266::begin(long baudrate)
 {
 	char *ch = _buff;
 
@@ -22,7 +22,7 @@ bool KSM111_ESP8266::begin()
 	}
 
 	// Initialize the SoftwareSerial
-	_serial.begin(115200);
+	_serial.begin(baudrate);
 	while (!_serial)
 		;
 
@@ -124,6 +124,28 @@ uint8_t KSM111_ESP8266::getMode()
 	}
 
 	return -1;
+}
+
+bool KSM111_ESP8266::setBaudrate(long baudrate)
+{
+	char *ch = _buff;
+
+	sprintf(ch, "AT+CIOBAUD=%ld", baudrate);
+	DEBUG_STR(ch);
+	_serial.println(ch);
+	delay(100);
+	while (_serial.available()) {
+		*ch++ = _serial.read();
+	}
+	*ch = '\0';
+	DEBUG_STR(_buff);
+
+	if (strstr(_buff, "OK")) {
+		_serial.begin(baudrate);
+		return true;
+	}
+
+	return false;
 }
 
 bool KSM111_ESP8266::listAP(APInfo *apList, int count, int *vaildCount)
