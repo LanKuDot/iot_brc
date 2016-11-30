@@ -6,7 +6,7 @@
 
 #define DEBUG
 #ifdef DEBUG
- #define DEBUG_STR(x) Serial.println(x)
+ #define DEBUG_STR(x) Serial.print("# "); Serial.println(x)
 #else
  #define DEBUG_STR(X)
 #endif
