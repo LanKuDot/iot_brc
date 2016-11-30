@@ -151,7 +151,10 @@ class KSM111_ESP8266 {
 		void getIP(uint8_t mode, char *ip);
 
 		/**
-		 * @brief Send a message
+		 * @brief Send a message to server.
+		 *
+		 * Note that this function can be only used in the client.
+		 *
 		 * @param msg [input] The message wants to passed to AP
 		 * @return True if it sends successfully
 		 */
@@ -160,7 +163,7 @@ class KSM111_ESP8266 {
 		 /* @brief Receive the message send from others
 		  * @param msg [out] The buffer for receiving message
 		  * @param buffLen [in] The max length of the buffer _msg_ including null character.
-		  * @return The ID of the sender. In single conenction mode, always return 0.
+		  * @return The ID of the sender. In single conenction mode always returns 0.
 		  * @retval -1 There is no message to read.
 		  */
 		 int8_t gets(char * const msg, unsigned int buffLen);
