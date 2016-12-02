@@ -1,4 +1,4 @@
-#include <WIFI.h>
+#include <KSM111_ESP8266.h>
 
 #define UART_RX 10
 #define UART_TX 2
