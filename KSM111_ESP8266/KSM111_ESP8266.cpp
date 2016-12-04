@@ -29,7 +29,7 @@ bool KSM111_ESP8266::begin(long baudrate)
 	DEBUG_STR("AT");
 	// Wake up the wifi module.
 	_serial.println("AT");
-	delay(5000);	// It takes some time to get out of bed
+	delay(50);	// It takes some time to get out of bed
 	while(_serial.available()) {
 		*ch++ = _serial.read();
 	}

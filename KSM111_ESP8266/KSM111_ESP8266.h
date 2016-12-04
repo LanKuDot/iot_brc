@@ -46,7 +46,6 @@ class KSM111_ESP8266 {
 
 		/**
 		 * @brief Set the buadrate of <tt>_serial</tt> to 115200.
-		 *        It takes 5 seoncds to wake up the wifi module.
 		 * @param baudrate Specify the baudrate of SoftwareSerial.
 		 * @return true if the module is successfully waked up.
 		 */
