@@ -182,7 +182,7 @@ class KSM111_ESP8266 {
 		/**
 		 * @brief The buffer for temporarily storing the message.
 		 */
-		char _buff[512];
+		char _buff[128];
 };
 
 #endif // _KSM111_ESP8266_H_
