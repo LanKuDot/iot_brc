@@ -57,9 +57,9 @@ bool KSM111_ESP8266::softReset()
 	_serial.println("AT+RST");
 	delay(5000);
 	while (_serial.available()) {
-		*ch++ = _serial.read();
+		*ch = _serial.read();
 	}
-	*ch = '\0';
+	*ch++ = '\0';
 	DEBUG_STR(_buff);
 
 	/* Response: "AT+RST
