@@ -108,7 +108,7 @@ bool BRCClient::receiveMessage(CommMsg *msg)
 
 		case MSG_ROUND_START:
 		case MSG_ROUND_END:
-			// No additional message
+			msg->ID = *ch++;
 			break;
 
 		case MSG_CUSTOM:
