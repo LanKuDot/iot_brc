@@ -95,7 +95,7 @@ bool BRCClient::receiveMessage(CommMsg *msg)
 	char *ch = buffer;
 
 	if (gets(buffer, COMM_MSG_BUF_LEN + 2) == -1)
-		return -1;
+		return false;
 
 	msg->type = ch;
 	switch (*ch++) {
