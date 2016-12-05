@@ -69,6 +69,10 @@ bool BRCClient::sendMessage(CommMsg *msg)
 			*(ch+4) = '\0';
 			break;
 
+		case MSG_ROUND_COMPELETE:
+			// No additional message
+			break;
+
 		case MSG_CUSTOM:
 			*ch++ = msg->ID;
 			memcpy(ch, msg->buffer, COMM_MSG_BUF_LEN);
