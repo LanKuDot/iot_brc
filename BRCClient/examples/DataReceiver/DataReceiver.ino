@@ -7,10 +7,11 @@
 
 #ifdef UNO
  #define UART_RX 3
+ #define UART_TX 2
 #else
  #define UART_RX 10
+ #define UART_TX 2
 #endif
-#define UART_TX 2
 
 // You have to modify the corresponding parameter
 #define AP_SSID    "AP_SSID"
