@@ -48,6 +48,8 @@ class BRCClient : public KSM111_ESP8266
 		 * @brief Send a message to the server.
 		 *
 		 * It's highly recommended that add a null character at theend of the message in the buffer.
+		 * Therefore, the max number of vaild characters is COMM_MSG_BUF_LEN - 1,
+		 * which reserving 1 byte for a null-charater.
 		 *
 		 * @param msg The pointer to the container of the message.
 		 * @return true if the message is successfuly sent.
