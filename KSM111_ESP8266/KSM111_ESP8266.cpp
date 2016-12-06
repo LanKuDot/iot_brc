@@ -133,6 +133,7 @@ bool KSM111_ESP8266::setBaudrate(long baudrate)
 	sprintf(ch, "AT+CIOBAUD=%ld", baudrate);
 	DEBUG_STR(ch);
 	_serial.println(ch);
+	_serial.begin(baudrate);
 	delay(100);
 	while (_serial.available()) {
 		*ch++ = _serial.read();
