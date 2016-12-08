@@ -123,6 +123,7 @@ bool BRCClient::registerID(const uint8_t ID)
 	delay(10);
 	if (receiveMessage(&requestMsg) &&
 	    strcmp(requestMsg.buffer, "OK") == 0) {
+		_myID = ID;
 		return true;
 	} else
 		return false;
