@@ -20,7 +20,11 @@
 #define TCP_PORT   5000
 #define MY_COMM_ID 0x20
 
-BRCClient brcClient(UART_RX, UART_TX);
+// if you're using software serial, uncomment this line.
+// BRCClient brcClient(UART_RX, UART_TX);
+
+// if you're using hardware serial, uncomment this line.
+// BRCClient brcClient(&Serial3); //use "TX3" and "RX3" on arduino mega
 
 void setup()
 {

@@ -2,7 +2,9 @@
 #define _KSM111_ESP8266_H_
 
 #include <stdint.h>
+#include <Stream.h>
 #include <SoftwareSerial.h>
+#include <HardwareSerial.h>
 
 /* The mode of wifi */
 #define STATION 1
@@ -20,6 +22,8 @@
 #define CONNECT_OK       0
 #define CONNECT_ERROR   -1
 #define ALREADY_CONNECT  1
+
+enum {HARD, SOFT};
 
 /**
  * @struct AccessPointInfo
@@ -41,9 +45,18 @@ class KSM111_ESP8266 {
 		 * @param txPin The number of pin connected to the RXD pin of the nodule.
 		 * @param resetPin [optional] ]The number of pin connected to the RST pin of the module.
 		 */
-		KSM111_ESP8266(int rxPin, int txPin, int resetPin = -1)
-			: _serial(rxPin, txPin), _resetPin(resetPin) {}
+		
+		
+		/**
+		 * @brief constructor for software serial
+		 */
+		KSM111_ESP8266(int rxPin, int txPin, int resetPin = -1);
 
+		/**
+		 * constrictor for hardware serial
+		 */
+		KSM111_ESP8266(HardwareSerial *hws, int resetPin = -1);
+		
 		/**
 		 * @brief Set the buadrate of <tt>_serial</tt> to 115200.
 		 * @param baudrate Specify the baudrate of SoftwareSerial.
@@ -171,7 +184,7 @@ class KSM111_ESP8266 {
 		/**
 		 * @brief The interface for communicating with the module.
 		 */
-		SoftwareSerial _serial;
+		Stream *_serial;
 
 		/**
 		 * @brief The number of pin which is connected to the RST pin of the module.
@@ -182,6 +195,12 @@ class KSM111_ESP8266 {
 		 * @brief The buffer for temporarily storing the message.
 		 */
 		char _buff[128];
+		
+
+		/**
+		 * @brief Record Hardware or Software Serial is using
+		 */
+		int _serialType;
 };
 
 #endif // _KSM111_ESP8266_H_
