@@ -2,6 +2,7 @@
 #define _BRC_CLIENT_H_
 
 #include <KSM111_ESP8266.h>
+#include <HardwareSerial.h>
 #include "CommMsg.h"
 
 class BRCClient : public KSM111_ESP8266
@@ -9,6 +10,9 @@ class BRCClient : public KSM111_ESP8266
 	public:
 		BRCClient(int rxPin, int txPin, int resetPin = -1)
 			: KSM111_ESP8266(rxPin, txPin, resetPin), _myID(0xFF) {}
+
+		BRCClient(HardwareSerial *hws, int resetPin = -1)
+			: KSM111_ESP8266(hws, resetPin) {}
 
 		/**
 		 * @brief Join AP and connect to the TCP server.
