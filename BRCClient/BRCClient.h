@@ -26,16 +26,6 @@ class BRCClient : public KSM111_ESP8266
 		bool beginBRCClient(const char *ssid, const char *passwd, const char *serverIP, const int port);
 
 		/**
-		 * @brief Register an ID representing itself on BRC server.
-		 *
-		 * Note that the _ID_ can't be 0xFF, or from 0x00 to 0x0F.
-		 *
-		 * @param ID The ID representing the module.
-		 * @return true if the ID is successfully registered.
-		 */
-		bool registerID(const uint8_t ID);
-
-		/**
 		 * @brief Disconnect from the TCP server and quit from AP.
 		 *
 		 * This function will call <tt>endClient()</tt> and <tt>quitAP()</tt> in sequence.
@@ -62,6 +52,16 @@ class BRCClient : public KSM111_ESP8266
 		 * @return true if there is an incoming message.
 		 */
 		bool receiveMessage(CommMsg *msg);
+
+		/**
+		 * @brief Register an ID representing itself on BRC server.
+		 *
+		 * Note that the _ID_ can't be 0xFF, or from 0x00 to 0x0F.
+		 *
+		 * @param ID The ID representing the module.
+		 * @return true if the ID is successfully registered.
+		 */
+		bool registerID(const uint8_t ID);
 };
 
 #endif
