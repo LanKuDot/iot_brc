@@ -9,7 +9,7 @@ class BRCClient : public KSM111_ESP8266
 {
 	public:
 		BRCClient(int rxPin, int txPin, int resetPin = -1)
-			: KSM111_ESP8266(rxPin, txPin, resetPin) {}
+			: KSM111_ESP8266(rxPin, txPin, resetPin), _myID(0xFF) {}
 
 		BRCClient(HardwareSerial *hws, int resetPin = -1)
 			: KSM111_ESP8266(hws, resetPin) {}
@@ -28,16 +28,6 @@ class BRCClient : public KSM111_ESP8266
 		 * @return true if the module successfully connects to the TCP server.
 		 */
 		bool beginBRCClient(const char *ssid, const char *passwd, const char *serverIP, const int port);
-
-		/**
-		 * @brief Register an ID representing itself on BRC server.
-		 *
-		 * Note that the _ID_ can't be 0xFF, or from 0x00 to 0x0F.
-		 *
-		 * @param ID The ID representing the module.
-		 * @return true if the ID is successfully registered.
-		 */
-		bool registerID(const uint8_t ID);
 
 		/**
 		 * @brief Disconnect from the TCP server and quit from AP.
@@ -66,6 +56,22 @@ class BRCClient : public KSM111_ESP8266
 		 * @return true if there is an incoming message.
 		 */
 		bool receiveMessage(CommMsg *msg);
+
+		/**
+		 * @brief Register an ID representing itself on BRC server.
+		 *
+		 * Note that the _ID_ can't be 0xFF, or from 0x00 to 0x0F.
+		 *
+		 * @param ID The ID representing the module.
+		 * @return true if the ID is successfully registered.
+		 */
+		bool registerID(const uint8_t ID);
+
+	private:
+		/**
+		 * @brief The ID representing itself in the BRC server.
+		 */
+		uint8_t _myID;
 };
 
 #endif

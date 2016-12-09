@@ -14,32 +14,6 @@ bool BRCClient::beginBRCClient(const char *ssid, const char *passwd, const char 
 	return false;
 }
 
-bool BRCClient::registerID(const uint8_t ID)
-{
-	// Invaild register ID
-	if (ID == 0xFF ||
-	    (ID >= 0x00 && ID < 0x10)) {
-		return false;
-	}
-
-	CommMsg requestMsg = {
-		.type = MSG_REGISTER,
-		.ID = ID
-	};
-
-	// Send the request
-	if (!sendMessage(&requestMsg))
-		return false;
-
-	// Wait for a moment and receive the reply from server
-	delay(10);
-	if (receiveMessage(&requestMsg) &&
-	    strcmp(requestMsg.buffer, "OK") == 0) {
-		return true;
-	} else
-		return false;
-}
-
 bool BRCClient::endBRCClient()
 {
 	if (!endClient())
@@ -126,4 +100,31 @@ bool BRCClient::receiveMessage(CommMsg *msg)
 	}
 
 	return true;
+}
+
+bool BRCClient::registerID(const uint8_t ID)
+{
+	// Invaild register ID
+	if (ID == 0xFF ||
+	    (ID >= 0x00 && ID < 0x10)) {
+		return false;
+	}
+
+	CommMsg requestMsg = {
+		.type = MSG_REGISTER,
+		.ID = ID
+	};
+
+	// Send the request
+	if (!sendMessage(&requestMsg))
+		return false;
+
+	// Wait for a moment and receive the reply from server
+	delay(10);
+	if (receiveMessage(&requestMsg) &&
+	    strcmp(requestMsg.buffer, "OK") == 0) {
+		_myID = ID;
+		return true;
+	} else
+		return false;
 }
