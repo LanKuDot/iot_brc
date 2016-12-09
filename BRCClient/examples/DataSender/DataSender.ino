@@ -60,9 +60,9 @@ void setup()
 
 void loop()
 {
-	sendToClient(PARTNER_COMM_ID, "Hello");
+	brcClient.sendToClient(PARTNER_COMM_ID, "Hello");
 	delay(2000);
-	broadcast("World");
+	brcClient.broadcast("World");
 	delay(2000);
 	// Enter 'q' from serial monitor to stop the application.
 	if (Serial.available()) {
@@ -73,48 +73,4 @@ void loop()
 				;
 		}
 	}
-}
-
-// Note that the length of message can't be more than
-// COMM_MSG_BUF_LEN - 1, which reserving 1 byte for null-
-// character.
-bool sendToClient(uint8_t ID, char *message)
-{
-	CommMsg msg = {
-		.type = MSG_CUSTOM,
-		.ID = PARTNER_COMM_ID
-	};
-	strncpy(msg.buffer, message, COMM_MSG_BUF_LEN);
-	brcClient.sendMessage(&msg);
-
-	// Delay for a while to receive the response
-	delay(1);
-	if (!brcClient.receiveMessage(&msg))
-		return false;
-
-	if (msg.ID == MY_COMM_ID &&
-		strcmp(msg.buffer, "OK") == 0)
-		return true;
-	else
-		return false;
-}
-
-bool broadcast(char *message)
-{
-	CommMsg msg = {
-		.type = MSG_CUSTOM_BROADCAST
-	};
-	strncpy(msg.buffer, message, COMM_MSG_BUF_LEN);
-	brcClient.sendMessage(&msg);
-
-	// Delay for a while to receive the response
-	delay(1);
-	if (!brcClient.receiveMessage(&msg))
-		return false;
-
-	if (msg.ID == MY_COMM_ID &&
-		strcmp(msg.buffer, "OK") == 0)
-		return true;
-	else
-		return false;
 }

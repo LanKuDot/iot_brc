@@ -128,3 +128,44 @@ bool BRCClient::registerID(const uint8_t ID)
 	} else
 		return false;
 }
+
+bool BRCClient::sendToClient(const uint8_t ID, const char *message)
+{
+	CommMsg msg = {
+		.type = MSG_CUSTOM,
+		.ID = ID
+	};
+	strncpy(msg.buffer, message, COMM_MSG_BUF_LEN);
+	sendMessage(&msg);
+
+	// Delay for a while to receive the response
+	delay(1);
+	if (!receiveMessage(&msg))
+		return false;
+
+	if (msg.ID == _myID &&
+		strcmp(msg.buffer, "OK") == 0)
+		return true;
+	else
+		return false;
+}
+
+bool BRCClient::broadcast(const char *message)
+{
+	CommMsg msg = {
+		.type = MSG_CUSTOM_BROADCAST
+	};
+	strncpy(msg.buffer, message, COMM_MSG_BUF_LEN);
+	sendMessage(&msg);
+
+	// Delay for a while to receive the response
+	delay(1);
+	if (!receiveMessage(&msg))
+		return false;
+
+	if (msg.ID == _myID &&
+		strcmp(msg.buffer, "OK") == 0)
+		return true;
+	else
+		return false;
+}

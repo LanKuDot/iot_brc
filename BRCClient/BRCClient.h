@@ -66,6 +66,27 @@ class BRCClient : public KSM111_ESP8266
 		 */
 		bool registerID(const uint8_t ID);
 
+		/**
+		 * @brief Send the message to the specified BRC client.
+		 *
+		 * Note that the length of <tt>message</tt> can't be more than
+		 * COMM_MSG_BUF_LEN - 1, you have to reserve 1 byte for null-character.
+		 *
+		 * @param The ID of the client who will receive the message.
+		 * @param message The buffer of the message
+		 */
+		bool sendToClient(const uint8_t ID, const char *message);
+
+		/**
+		 * @brief Broadcast the message to all the BRC clients.
+		 *
+		 * Note that the length of <tt>message</tt> can't be more than
+		 * COMM_MSG_BUF_LEN - 1, you have to reserve 1 byte for null-character.
+		 *
+		 * @param message The buffer of the message
+		 */
+		bool broadcast(const char *message);
+
 	private:
 		/**
 		 * @brief The ID representing itself in the BRC server.
