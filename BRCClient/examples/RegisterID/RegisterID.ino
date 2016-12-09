@@ -4,8 +4,13 @@
 #include <BRCClient.h>
 
 // #define UNO
+// #define USE_HARDWARE_SERIAL
 
 #ifdef UNO
+ #ifdef USE_HARDWARE_SERIAL
+  #error Hardware Serial can't use for UNO
+ #endif
+
  #define UART_RX 3
  #define UART_TX 2
 #else
@@ -19,8 +24,14 @@
 #define TCP_IP     "TCP_IP"
 #define TCP_PORT   5000
 #define MY_COMM_ID 0x20
+#define HW_SERIAL  Serial3
 
-BRCClient brcClient(UART_RX, UART_TX);
+#ifdef USE_HARDWARE_SERIAL
+ BRCClient brcClient(&HW_SERIAL);
+#else
+ BRCClient brcClient(UART_RX, UART_TX);
+#endif
+
 
 void setup()
 {

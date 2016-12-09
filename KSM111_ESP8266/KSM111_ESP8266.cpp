@@ -21,17 +21,17 @@ bool KSM111_ESP8266::begin(long baudrate)
 		digitalWrite(_resetPin, HIGH);
 	}
 
-	// Initialize the SoftwareSerial
-	_serial.begin(baudrate);
-	while (!_serial)
-		;
+	// Initialize the Serial
+	if(_serialType == HARD) ((HardwareSerial*)_serial)->begin(baudrate);
+	else ((SoftwareSerial*)_serial)->begin(baudrate);
+	while (!_serial);
 
 	DEBUG_STR("AT");
 	// Wake up the wifi module.
-	_serial.println("AT");
+	_serial->println("AT");
 	delay(50);	// It takes some time to get out of bed
-	while(_serial.available()) {
-		*ch++ = _serial.read();
+	while(_serial->available()) {
+		*ch++ = _serial->read();
 	}
 	*ch = '\0';
 	DEBUG_STR(_buff);
@@ -46,7 +46,8 @@ bool KSM111_ESP8266::begin(long baudrate)
 
 void KSM111_ESP8266::end()
 {
-	_serial.end();
+	if(_serialType == HARD) ((HardwareSerial*)_serial)->end();
+	else ((SoftwareSerial*)_serial)->end();
 }
 
 bool KSM111_ESP8266::softReset()
@@ -54,10 +55,10 @@ bool KSM111_ESP8266::softReset()
 	char *ch = _buff;
 
 	DEBUG_STR("AT+RST");
-	_serial.println("AT+RST");
+	_serial->println("AT+RST");
 	delay(5000);
-	while (_serial.available()) {
-		*ch = _serial.read();
+	while (_serial->available()) {
+		*ch = _serial->read();
 	}
 	*ch++ = '\0';
 	DEBUG_STR(_buff);
@@ -79,10 +80,10 @@ bool KSM111_ESP8266::setMode(uint8_t mode)
 
 	sprintf(ch, "AT+CWMODE=%d", mode);
 	DEBUG_STR(_buff);
-	_serial.println(ch);
+	_serial->println(ch);
 	delay(500);
-	while (_serial.available()) {
-		*ch++ = _serial.read();
+	while (_serial->available()) {
+		*ch++ = _serial->read();
 	}
 	*ch = '\0';
 	DEBUG_STR(_buff);
@@ -100,10 +101,10 @@ uint8_t KSM111_ESP8266::getMode()
 	char *ch = _buff;
 
 	DEBUG_STR("AT+CWMODE?");
-	_serial.println("AT+CWMODE?");
+	_serial->println("AT+CWMODE?");
 	delay(100);
-	while (_serial.available()) {
-		*ch++ = _serial.read();
+	while (_serial->available()) {
+		*ch++ = _serial->read();
 	}
 	*ch = '\0';
 	DEBUG_STR(_buff);
@@ -132,17 +133,21 @@ bool KSM111_ESP8266::setBaudrate(long baudrate)
 
 	sprintf(ch, "AT+CIOBAUD=%ld", baudrate);
 	DEBUG_STR(ch);
-	_serial.println(ch);
-	_serial.begin(baudrate);
+	_serial->println(ch);
+	if(_serialType == HARD) ((HardwareSerial*)_serial)->begin(baudrate);
+	else ((SoftwareSerial*)_serial)->begin(baudrate);
+
 	delay(100);
-	while (_serial.available()) {
-		*ch++ = _serial.read();
+	while (_serial->available()) {
+		*ch++ = _serial->read();
 	}
 	*ch = '\0';
 	DEBUG_STR(_buff);
 
 	if (strstr(_buff, "OK")) {
-		_serial.begin(baudrate);
+		if(_serialType == HARD) ((HardwareSerial*)_serial)->begin(baudrate);
+		else ((SoftwareSerial*)_serial)->begin(baudrate);
+
 		return true;
 	}
 
@@ -160,14 +165,14 @@ bool KSM111_ESP8266::listAP(APInfo *apList, int count, int *vaildCount)
 		return false;
 
 	DEBUG_STR("AT+CWLAP");
-	_serial.println("AT+CWLAP");
+	_serial->println("AT+CWLAP");
 	delay(5000);	// Wait for searching
 
 	// Wait until responsing with OK or ERROR
 	while (1) {
 		// Read the response line by line
-		while (_serial.available()) {
-			*ch++ = _serial.read();
+		while (_serial->available()) {
+			*ch++ = _serial->read();
 			if (*(ch-1) == '\n') {
 				*(ch-1) = '\0';
 				DEBUG_STR(_buff);
@@ -198,7 +203,7 @@ bool KSM111_ESP8266::listAP(APInfo *apList, int count, int *vaildCount)
 	}
 
 	// Flush the buffer
-	while (_serial.available())
+	while (_serial->available())
 		;
 
 	if (vaildCount != NULL)
@@ -212,13 +217,13 @@ bool KSM111_ESP8266::joinAP(const char *ssid, const char *passwd)
 
 	sprintf(ch, "AT+CWJAP=\"%s\",\"%s\"", ssid, passwd);
 	DEBUG_STR(ch);
-	_serial.println(ch);
+	_serial->println(ch);
 	delay(8000);
 
 	// Wait until responsing with OK or FAIL
 	while (1) {
-		while (_serial.available()) {
-			*ch++ = _serial.read();
+		while (_serial->available()) {
+			*ch++ = _serial->read();
 		}
 		*ch = '\0';
 		DEBUG_STR(_buff);
@@ -236,12 +241,12 @@ void KSM111_ESP8266::quitAP()
 {
 	char *ch = _buff;
 
-	_serial.println("AT+CWQAP");
+	_serial->println("AT+CWQAP");
 	DEBUG_STR("AT+CWQAP");
 	delay(100);
 
-	while (_serial.available()) {
-		*ch++ = _serial.read();
+	while (_serial->available()) {
+		*ch++ = _serial->read();
 	}
 	*ch = '\0';
 	DEBUG_STR(_buff);
@@ -252,12 +257,12 @@ bool KSM111_ESP8266::multiConnect(bool mode)
 	char *ch = _buff;
 
 	sprintf(ch, "AT+CIPMUX=%d", mode ? 1 : 0 );
-	_serial.println(ch);
+	_serial->println(ch);
 	DEBUG_STR(ch);
 	delay(100);
 
-	while (_serial.available()) {
-		*ch++ = _serial.read();
+	while (_serial->available()) {
+		*ch++ = _serial->read();
 	}
 	*ch = '\0';
 	DEBUG_STR(_buff);
@@ -273,12 +278,12 @@ uint8_t KSM111_ESP8266::beginClient(const char *type, const char *ip, const int 
 	char *ch = _buff;
 
 	sprintf(ch, "AT+CIPSTART=\"%s\",\"%s\",%d", type, ip, port);
-	_serial.println(ch);
+	_serial->println(ch);
 	DEBUG_STR(ch);
 	delay(100);
 
-	while (_serial.available()) {
-		*ch++ = _serial.read();
+	while (_serial->available()) {
+		*ch++ = _serial->read();
 	}
 	*ch = '\0';
 	DEBUG_STR(_buff);
@@ -295,12 +300,12 @@ bool KSM111_ESP8266::endClient()
 {
 	char *ch = _buff;
 
-	_serial.println("AT+CIPCLOSE");
+	_serial->println("AT+CIPCLOSE");
 	DEBUG_STR("AT+CIPCLOSE");
 	delay(250);
 
-	while (_serial.available()) {
-		*ch++ = _serial.read();
+	while (_serial->available()) {
+		*ch++ = _serial->read();
 	}
 	*ch = '\0';
 	DEBUG_STR(_buff);
@@ -317,10 +322,10 @@ void KSM111_ESP8266::getIP(uint8_t mode, char *ip)
 
 	switch (mode) {
 		case STATION:
-			_serial.println("AT+CIPSTA?");
+			_serial->println("AT+CIPSTA?");
 			break;
 		case AP:
-			_serial.println("AT+CIPAP?");
+			_serial->println("AT+CIPAP?");
 			break;
 		default:
 			return;
@@ -328,8 +333,8 @@ void KSM111_ESP8266::getIP(uint8_t mode, char *ip)
 	DEBUG_STR("GET IP");
 	delay(500);
 
-	while (_serial.available()) {
-		*ch++ = _serial.read();
+	while (_serial->available()) {
+		*ch++ = _serial->read();
 	}
 	*ch = '\0';
 	DEBUG_STR(_buff);
@@ -350,12 +355,12 @@ bool KSM111_ESP8266::puts(const char *msg)
 	int msgLen = strlen(msg);
 
 	sprintf(ch, "AT+CIPSEND=%d", msgLen);
-	_serial.println(ch);
+	_serial->println(ch);
 	DEBUG_STR(ch);
 	delay(50);
 
-	while (_serial.available()) {
-		*ch++ = _serial.read();
+	while (_serial->available()) {
+		*ch++ = _serial->read();
 	}
 	*ch = '\0';
 	if (!strstr(_buff, ">")) {
@@ -363,12 +368,12 @@ bool KSM111_ESP8266::puts(const char *msg)
 	}
 	DEBUG_STR(_buff);
 
-	_serial.println(msg);
+	_serial->println(msg);
 	while (1) {
 		ch = _buff;
 
-		while (_serial.available()) {
-			*ch++ = _serial.read();
+		while (_serial->available()) {
+			*ch++ = _serial->read();
 			delay(10);
 			if (*(ch-1) == '\n') {
 				*ch = '\0';
@@ -390,13 +395,13 @@ int8_t KSM111_ESP8266::gets(char * const msg, unsigned int buffLen)
 	char *ch = _buff, *end;
 	int sendID = 0, msgLen = 0;
 
-	if (!_serial.available())
+	if (!_serial->available())
 		return -1;
 
 	// +IPD,<msgLen>:<data> in SINGLE mode
 	// +IPD,<id>,<msgLen>:<data> in MULTIPLE mode
-	while (_serial.available()) {
-		*ch++ = _serial.read();
+	while (_serial->available()) {
+		*ch++ = _serial->read();
 		delay(10);
 	}
 	*ch = '\0';

@@ -10,6 +10,9 @@ class BRCClient : public KSM111_ESP8266
 		BRCClient(int rxPin, int txPin, int resetPin = -1)
 			: KSM111_ESP8266(rxPin, txPin, resetPin), _myID(0xFF) {}
 
+		BRCClient(HardwareSerial *hws, int resetPin = -1)
+			: KSM111_ESP8266(hws, resetPin), _myID(0xFF) {}
+
 		/**
 		 * @brief Join AP and connect to the TCP server.
 		 *
