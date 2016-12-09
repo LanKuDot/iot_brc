@@ -4,7 +4,12 @@
 
 #include <BRCClient.h>
 
+/* If you are using UNO, uncomment the next line. */
 // #define UNO
+/* If you are using MEGA and want to use HardwareSerial,
+ * umcomment the next 2 lines. */
+// #define USE_HARDWARE_SERIAL
+// #define HW_SERIAL Serial3
 
 #ifdef UNO
  #define UART_RX 3
@@ -12,6 +17,12 @@
 #else
  #define UART_RX 10
  #define UART_TX 2
+#endif
+
+#if !defined(UNO) && defined(USE_HARDWARE_SERIAL)
+ BRCClient brcClient(&HW_SERIAL);
+#else
+ BRCClient brcClient(UART_RX, UART_TX);
 #endif
 
 // You have to modify the corresponding parameter
@@ -22,8 +33,6 @@
 #define MY_COMM_ID 0x24
 
 #define PARTNER_COMM_ID 0x20
-
-BRCClient brcClient(UART_RX, UART_TX);
 
 void setup()
 {
