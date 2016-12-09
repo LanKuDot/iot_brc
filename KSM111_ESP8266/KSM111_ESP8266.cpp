@@ -22,9 +22,12 @@ bool KSM111_ESP8266::begin(long baudrate)
 	}
 
 	// Initialize the Serial
-	if(_serialType == HARD) ((HardwareSerial*)_serial)->begin(baudrate);
-	else ((SoftwareSerial*)_serial)->begin(baudrate);
-	while (!_serial);
+	if (_serialType == HARD)
+		((HardwareSerial*)_serial)->begin(baudrate);
+	else
+		((SoftwareSerial*)_serial)->begin(baudrate);
+	while (!_serial)
+		;
 
 	DEBUG_STR("AT");
 	// Wake up the wifi module.
@@ -46,8 +49,10 @@ bool KSM111_ESP8266::begin(long baudrate)
 
 void KSM111_ESP8266::end()
 {
-	if(_serialType == HARD) ((HardwareSerial*)_serial)->end();
-	else ((SoftwareSerial*)_serial)->end();
+	if (_serialType == HARD)
+		((HardwareSerial*)_serial)->end();
+	else
+		((SoftwareSerial*)_serial)->end();
 }
 
 bool KSM111_ESP8266::softReset()
@@ -145,8 +150,10 @@ bool KSM111_ESP8266::setBaudrate(long baudrate)
 	DEBUG_STR(_buff);
 
 	if (strstr(_buff, "OK")) {
-		if(_serialType == HARD) ((HardwareSerial*)_serial)->begin(baudrate);
-		else ((SoftwareSerial*)_serial)->begin(baudrate);
+		if (_serialType == HARD)
+			((HardwareSerial*)_serial)->begin(baudrate);
+		else
+			((SoftwareSerial*)_serial)->begin(baudrate);
 
 		return true;
 	}
