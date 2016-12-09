@@ -23,6 +23,7 @@
 #define CONNECT_ERROR   -1
 #define ALREADY_CONNECT  1
 
+/* Serial type tag */
 enum {HARD, SOFT};
 
 /**
@@ -45,21 +46,15 @@ class KSM111_ESP8266 {
 		 * @param txPin The number of pin connected to the RXD pin of the nodule.
 		 * @param resetPin [optional] ]The number of pin connected to the RST pin of the module.
 		 */
-		
-		
-		/**
-		 * @brief constructor for software serial
-		 */
 		KSM111_ESP8266(int rxPin, int txPin, int resetPin = -1)
 			: _serial(new SoftwareSerial(rxPin, txPin)), _resetPin(resetPin), _serialType(SOFT) {}
 
 		/**
-		 * @brief constrictor for hardware serial
+		 * @brief Constructor for using <tt>HardwareSerial</tt> to communicate with module.
 		 */
 		KSM111_ESP8266(HardwareSerial *hws, int resetPin = -1)
 			: _serial(hws), _resetPin(resetPin), _serialType(HARD) {}
 
-		
 		/**
 		 * @brief Set the buadrate of <tt>_serial</tt> to 115200.
 		 * @param baudrate Specify the baudrate of SoftwareSerial.
@@ -190,6 +185,11 @@ class KSM111_ESP8266 {
 		Stream *_serial;
 
 		/**
+		 * @brief Record either SoftwareSerial or HarewareSerial is in use.
+		 */
+		int _serialType;
+
+		/**
 		 * @brief The number of pin which is connected to the RST pin of the module.
 		 */
 		int _resetPin;
@@ -198,12 +198,6 @@ class KSM111_ESP8266 {
 		 * @brief The buffer for temporarily storing the message.
 		 */
 		char _buff[128];
-		
-
-		/**
-		 * @brief Record Hardware or Software Serial is using
-		 */
-		int _serialType;
 };
 
 #endif // _KSM111_ESP8266_H_
