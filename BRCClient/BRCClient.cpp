@@ -8,7 +8,7 @@ bool BRCClient::beginBRCClient(const char *ssid, const char *passwd, const char 
 	setMode(STATION);
 	multiConnect(false);
 	quitAP();
-	if (joinAP(ssid, passwd) && beginClient("TCP", serverIP, port))
+	if (joinAP(ssid, passwd) && beginClient("TCP", serverIP, port) == STATUS_OK)
 		return true;
 
 	return false;
