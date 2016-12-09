@@ -11,18 +11,6 @@
  #define DEBUG_STR(X)
 #endif
 
-KSM111_ESP8266::KSM111_ESP8266(int rxPin, int txPin, int resetPin) {
-	_serialType = SOFT;
-	_resetPin = resetPin;
-	_serial = new SoftwareSerial(rxPin, txPin);
-}
-
-KSM111_ESP8266::KSM111_ESP8266(HardwareSerial *hws, int resetPin) {
-	_serialType = HARD;
-	_resetPin = resetPin;
-	_serial = hws;
-}
-
 bool KSM111_ESP8266::begin(long baudrate)
 {
 	char *ch = _buff;

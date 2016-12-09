@@ -50,12 +50,15 @@ class KSM111_ESP8266 {
 		/**
 		 * @brief constructor for software serial
 		 */
-		KSM111_ESP8266(int rxPin, int txPin, int resetPin = -1);
+		KSM111_ESP8266(int rxPin, int txPin, int resetPin = -1)
+			: _serial(new SoftwareSerial(rxPin, txPin)), _resetPin(resetPin), _serialType(SOFT) {}
 
 		/**
-		 * constrictor for hardware serial
+		 * @brief constrictor for hardware serial
 		 */
-		KSM111_ESP8266(HardwareSerial *hws, int resetPin = -1);
+		KSM111_ESP8266(HardwareSerial *hws, int resetPin = -1)
+			: _serial(hws), _resetPin(resetPin), _serialType(HARD) {}
+
 		
 		/**
 		 * @brief Set the buadrate of <tt>_serial</tt> to 115200.
