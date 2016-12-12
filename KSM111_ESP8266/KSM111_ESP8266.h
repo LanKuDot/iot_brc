@@ -107,7 +107,7 @@ class KSM111_ESP8266 {
 		 * @brief List avalible access points. The method takes 5 seconds.
 		 * @param apList [out] Store the information of access points
 		 * @param count [in] The max amount of listing access points
-		 * @param availCount [out] The number of vaild access points in <tt>apList</tt>.
+		 * @param vaildCount [out] The number of vaild access points in <tt>apList</tt>.
 		 * @return true if the responsing message contains "OK".
 		 *         If the device is in AP mode, it will responses "ERROR".
 		 */
@@ -115,7 +115,7 @@ class KSM111_ESP8266 {
 		/**
 		 * @brief Join an AP. The method takes 8 seconds.
 		 * @param ssid The ssid of the AP
-		 * @param passed The password of the AP
+		 * @param passwd The password of the AP
 		 */
 		bool joinAP(const char *ssid, const char *passwd);
 		/**

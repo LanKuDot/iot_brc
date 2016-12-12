@@ -72,7 +72,7 @@ class BRCClient : public KSM111_ESP8266
 		 * Note that the length of <tt>message</tt> can't be more than
 		 * COMM_MSG_BUF_LEN - 1, you have to reserve 1 byte for null-character.
 		 *
-		 * @param The ID of the client who will receive the message.
+		 * @param ID The ID of the client who will receive the message.
 		 * @param message The buffer of the message
 		 */
 		bool sendToClient(const uint8_t ID, const char *message);
