@@ -5,11 +5,19 @@
 
 bool BRCClient::beginBRCClient(const char *ssid, const char *passwd, const char *serverIP, const int port)
 {
-	quitAP();
-	setMode(STATION);
-	multiConnect(false);
-	if (joinAP(ssid, passwd) > 0 &&
-	    beginClient("TCP", serverIP, port) != CONNECT_ERROR)
+	char joinedSSID[32];
+	memset(joinedSSID, 0, 32);
+
+	// Check if the module joined an AP.
+	if (!joinedAP(joinedSSID) ||
+	    strcmp(joinedSSID, ssid) != 0) {
+		quitAP();
+		setMode(STATION);
+		multiConnect(false);
+		if (joinAP(ssid, passwd) < 0)
+			return false;
+	}
+	if (beginClient("TCP", serverIP, port) != CONNECT_ERROR)
 		return true;
 
 	return false;
