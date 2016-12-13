@@ -5,13 +5,19 @@
  * Modified by LanKuDot <airlanser@gmail.com>.
  * 8th Nov., 2016
  */
-/* The API for accessing the RFID via MF-RC522
+/**
+ * @file RFID/RFID.h
+ * @brief The header file of class RFID
  */
 #ifndef _RFID_H_
 #define _RFID_H_
 
 #include "MFRC522.h"
 
+/**
+ * @class RFID RFID/RFID.h <RFID.h>
+ * @brief The class for accessing RFID tag through MF-RC522.
+ */
 class RFID : public MFRC522
 {
 	public:

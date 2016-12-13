@@ -1,3 +1,7 @@
+/**
+ * @file KSM111_ESP8266/KSM111_ESP8266.h
+ * @brief The header file of class KSM111_ESP8266.
+ */
 #ifndef _KSM111_ESP8266_H_
 #define _KSM111_ESP8266_H_
 
@@ -27,7 +31,7 @@
 enum {HARD, SOFT};
 
 /**
- * @struct AccessPointInfo
+ * @struct AccessPointInfo KSM111_ESP8266/KSM111_ESP8266.h <KSM111_ESP8266.h>
  * @brief A data structure for storing the information of AP.
  */
 typedef struct AccessPointInfo {
@@ -38,6 +42,10 @@ typedef struct AccessPointInfo {
 	int     ch;			///< Channel
 } APInfo;
 
+/**
+ * @class KSM111_ESP8266 KSM111_ESP8266.h <KSM111_ESP8266.h>
+ * @brief The basic class which directly communicating with the KSM111_ESP8266 module.
+ */
 class KSM111_ESP8266 {
 	public:
 		/**
@@ -56,14 +64,14 @@ class KSM111_ESP8266 {
 			: _serial(hws), _resetPin(resetPin), _serialType(HARD) {}
 
 		/**
-		 * @brief Set the buadrate of <tt>_serial</tt> to 115200.
-		 * @param baudrate Specify the baudrate of SoftwareSerial.
+		 * @brief Set the buadrate of <tt>_serial</tt> and begin it
+		 * @param baudrate Specify the baudrate of <tt>_serial</tt>.
 		 * @return true if the module is successfully waked up.
 		 */
 		bool begin(long baudrate);
 
 		/**
-		 * @brief Close the connection of SoftwareSerial.
+		 * @brief Close the connection of <tt>_serial</tt>.
 		 */
 		void end();
 
@@ -75,14 +83,14 @@ class KSM111_ESP8266 {
 		bool softReset();
 
 		/**
-		 * @brief Set the operating mode of the module. The method takes 0.5 seconds.
+		 * @brief Set the operating mode of the module. The method spends 0.5 seconds.
 		 * @param mode The operating mode: STATION, AP, or BOTH
 		 * @return true if the module responses "OK"
 		 */
 		bool setMode(uint8_t mode);
 
 		/**
-		 * @brief Get the operating mode of the module. The method takes 0.1 seconds.
+		 * @brief Get the operating mode of the module. The method spends 0.1 seconds.
 		 * @return The operating mode
 		 */
 		uint8_t getMode();
@@ -91,7 +99,8 @@ class KSM111_ESP8266 {
 		 * @brief Set the default UART baudrate of the module.
 		 *
 		 * Note that resetting the module cannot reset the baudrate.<br />
-		 * If the new baudrate is successfully set, the baudrate of SoftwareSerial will also be set to the new baudrate.
+		 * After the new baudrate has been successfully set, the baudrate of <tt>_serial</tt>
+		 * will also be set to the new baudrate.
 		 *
 		 * @param baudrate The baudrate to be set.
 		 * @return true if the module responses "OK".
@@ -104,7 +113,7 @@ class KSM111_ESP8266 {
 		 */
 		/** @{ */
 		/**
-		 * @brief List avalible access points. The method takes 5 seconds.
+		 * @brief List avalible access points. The method spends 5 seconds.
 		 * @param apList [out] Store the information of access points
 		 * @param count [in] The max amount of listing access points
 		 * @param vaildCount [out] The number of vaild access points in <tt>apList</tt>.
@@ -113,7 +122,7 @@ class KSM111_ESP8266 {
 		 */
 		bool listAP(APInfo *apList, int count, int *vaildCount);
 		/**
-		 * @brief Join an AP. The method takes 8 seconds.
+		 * @brief Join an AP. The method spends 8 seconds.
 		 * @param ssid The ssid of the AP
 		 * @param passwd The password of the AP
 		 */
@@ -148,14 +157,14 @@ class KSM111_ESP8266 {
 		uint8_t beginClient(const char *type, const char *ip, const int port);
 
 		/**
-		 * @brief Disconnect from the server but not quiting AP. Th method takes 0.25 seconds.
+		 * @brief Disconnect from the server but not quiting AP. Th method spends 0.25 seconds.
 		 * @return True if successfully disconnected
 		 */
 		bool endClient();
 
 		/**
-		 * @brief Get the ip address of module station or module AP. This method takes 0.5 seconds.
-		 * @param mode STATION or AP
+		 * @brief Get the IP address of the station or softAP. This method spends 0.5 seconds.
+		 * @param mode STATION or AP (softAP) mode
 		 * @param ip [out] The IP address
 		 */
 		void getIP(uint8_t mode, char *ip);
@@ -170,11 +179,12 @@ class KSM111_ESP8266 {
 		 */
 		 bool puts(const char *msg);
 
-		 /* @brief Receive the message send from others
+		 /**
+		  * @brief Receive the message sent from the server.
 		  * @param msg [out] The buffer for receiving message
 		  * @param buffLen [in] The max length of the buffer _msg_ including null character.
-		  * @return The ID of the sender. In single conenction mode always returns 0.
-		  * @retval -1 There is no message to read.
+		  * @return The ID of the sender. In single conenction mode, it always returns 0.
+		  * @retval -1 There is no incoming message.
 		  */
 		 int8_t gets(char * const msg, unsigned int buffLen);
 

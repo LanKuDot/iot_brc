@@ -17,7 +17,7 @@
 #define COMM_MSG_BUF_LEN 30
 
 /**
- * @struct COMM_MESSAGE
+ * @struct COMM_MESSAGE BRCClient/CommMsg.h "CommMsg.h"
  * @brief The data structure for communicating with the central terminal.
  */
 typedef struct COMM_MESSAGE {

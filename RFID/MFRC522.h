@@ -5,7 +5,9 @@
  * Modified by LanKuDot <airlanser@gmail.com>.
  * 8th Nov., 2016
  */
-/* The library for communicating the MF-RC522 module via SPI.
+/**
+ * @file RFID/MFRC522.h
+ * @brief The header file of class MFRC522
  */
 #ifndef _MFRCC522_H_
 #define _MFRCC522_H_
@@ -62,6 +64,10 @@
 #define STATUS_COLLISION       0x03
 #define STATUS_PCD_NO_RESPONSE 0x04
 
+/**
+ * @class MFRC522 RFID/MFRC522.h "MFRC522.h"
+ * @brief The class for accessing RC522 module by SPI.
+ */
 class MFRC522
 {
 	public:
