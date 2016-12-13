@@ -231,9 +231,13 @@ bool KSM111_ESP8266::joinAP(const char *ssid, const char *passwd)
 	while (1) {
 		while (_serial->available()) {
 			*ch++ = _serial->read();
+			delay(5);
 		}
 		*ch = '\0';
-		DEBUG_STR(_buff);
+		// There has vaild message
+		if (*_buff != 0) {
+			DEBUG_STR(_buff);
+		}
 
 		if (strstr(_buff, "OK"))
 			return true;
