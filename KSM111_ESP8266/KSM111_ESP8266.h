@@ -141,6 +141,12 @@ class KSM111_ESP8266 {
 		 */
 		int8_t joinAP(const char *ssid, const char *passwd);
 		/**
+		 * @brief Check if there is any joined AP
+		 * @param ssid The ssid of joined AP if any.
+		 * @return true if the module joined AP.
+		 */
+		bool joinedAP(char * const ssid);
+		/**
 		 * @brief Quit from the joined AP.
 		 */
 		void quitAP();

@@ -259,6 +259,33 @@ int8_t KSM111_ESP8266::joinAP(const char *ssid, const char *passwd)
 	}
 }
 
+bool KSM111_ESP8266::joinedAP(char * const ssid)
+{
+	char *ch = _buff, *ssidCh = ssid;
+
+	_serial->println("AT+CWJAP?");
+	DEBUG_STR("AT+CWJAP?");
+	delay(100);
+
+	while (_serial->available()) {
+		*ch++ = _serial->read();
+		delay(5);
+	}
+	*ch = '\0';
+	DEBUG_STR(_buff);
+
+	// Parse the information
+	if (ch = strstr(_buff, "+CWJAP:\"")) {
+		ch += 8;
+		while (*ch != '\"') {
+			*ssidCh++ = *ch++;
+		}
+		return true;
+	} else {
+		return false;
+	}
+}
+
 void KSM111_ESP8266::quitAP()
 {
 	char *ch = _buff;
