@@ -27,6 +27,13 @@
 #define CONNECT_ERROR   -1
 #define ALREADY_CONNECT  1
 
+/* Error Code from joining AP */
+#define JAP_OK 1
+#define ERR_JAP_TIMEOUT       -1	// Connection timeout
+#define ERR_JAP_WRONG_PASSWD  -2	// Wrong password
+#define ERR_JAP_AP_NOT_FOUND  -3	// Can not found target AP
+#define ERR_JAP_CONNECT_FAIL  -4	// Connect fail
+
 /* Serial type tag */
 enum {HARD, SOFT};
 
@@ -125,8 +132,14 @@ class KSM111_ESP8266 {
 		 * @brief Join an AP. The method spends 8 seconds.
 		 * @param ssid The ssid of the AP
 		 * @param passwd The password of the AP
+		 * @return The connection status of joining AP
+		 * @retval JAP_OK Success
+		 * @retval ERR_JAP_TIMEOUT Connecting timeout
+		 * @retval ERR_JAP_WRONG_PASSWD Wrong passwrod
+		 * @retval ERR_JAP_AP_NOT_FOUND Can not found target AP
+		 * @retval ERR_JAP_CONNECT_FAIL Connect fail
 		 */
-		bool joinAP(const char *ssid, const char *passwd);
+		int8_t joinAP(const char *ssid, const char *passwd);
 		/**
 		 * @brief Quit from the joined AP.
 		 */

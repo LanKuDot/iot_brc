@@ -218,7 +218,7 @@ bool KSM111_ESP8266::listAP(APInfo *apList, int count, int *vaildCount)
 	return status;
 }
 
-bool KSM111_ESP8266::joinAP(const char *ssid, const char *passwd)
+int8_t KSM111_ESP8266::joinAP(const char *ssid, const char *passwd)
 {
 	char *ch = _buff;
 
@@ -240,9 +240,20 @@ bool KSM111_ESP8266::joinAP(const char *ssid, const char *passwd)
 		}
 
 		if (strstr(_buff, "OK"))
-			return true;
-		else if (strstr(_buff, "FAIL"))
-			return false;
+			return JAP_OK;
+		else if (strstr(_buff, "FAIL")) {
+			ch = _buff + 7;	// Move to error code
+			switch (*ch) {
+				case '1':
+					return ERR_JAP_TIMEOUT;
+				case '2':
+					return ERR_JAP_WRONG_PASSWD;
+				case '3':
+					return ERR_JAP_AP_NOT_FOUND;
+				case '4':
+					return ERR_JAP_CONNECT_FAIL;
+			}
+		}
 
 		ch = _buff;
 	}
