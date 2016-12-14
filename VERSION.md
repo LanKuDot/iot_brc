@@ -1,3 +1,8 @@
+**v1,2,2**
+- Fix
+	- CommMsg: Add type cast to the constant value
+	- COmmMsg: Fix typo of `MSG_ROUND_COMPLETE`
+
 **v1.2.1**
 - Feature
 	- BRCClient: `beginBRCClient()` will not connect to the same connected AP.
