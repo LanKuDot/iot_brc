@@ -52,7 +52,7 @@ bool BRCClient::sendMessage(CommMsg *msg)
 			*(ch+4) = '\0';
 			break;
 
-		case MSG_ROUND_COMPELETE:
+		case MSG_ROUND_COMPLETE:
 			// No additional message
 			break;
 
