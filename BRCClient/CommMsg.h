@@ -7,7 +7,7 @@
 /** @{ */
 #define MSG_REGISTER         (char)0x01
 #define MSG_REQUEST_RFID     (char)0x10
-#define MSG_ROUND_COMPELETE  (char)0x11
+#define MSG_ROUND_COMPLETE   (char)0x11
 #define MSG_ROUND_START      (char)0x20
 #define MSG_ROUND_END        (char)0x21
 #define MSG_CUSTOM           (char)0x70
