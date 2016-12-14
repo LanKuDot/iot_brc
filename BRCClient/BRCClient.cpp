@@ -114,8 +114,8 @@ bool BRCClient::receiveMessage(CommMsg *msg)
 bool BRCClient::registerID(const uint8_t ID)
 {
 	// Invaild register ID
-	if (ID == 0xFF ||
-	    (ID >= 0x00 && ID < 0x10)) {
+	if (ID == (uint8_t)0xFF ||
+	    (ID >= (uint8_t)0x00 && ID < (uint8_t)0x10)) {
 		return false;
 	}
 

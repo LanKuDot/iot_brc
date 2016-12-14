@@ -29,7 +29,7 @@
 #define AP_PASSWD  "AP_PASSWD"
 #define TCP_IP     "TCP_IP"
 #define TCP_PORT   5000
-#define MY_COMM_ID 0x20
+#define MY_COMM_ID (char)0x20
 
 void setup()
 {

@@ -5,13 +5,13 @@
  * @name Communication data type
  */
 /** @{ */
-#define MSG_REGISTER         0x01
-#define MSG_REQUEST_RFID     0x10
-#define MSG_ROUND_COMPELETE  0x11
-#define MSG_ROUND_START      0x20
-#define MSG_ROUND_END        0x21
-#define MSG_CUSTOM           0x70
-#define MSG_CUSTOM_BROADCAST 0x71
+#define MSG_REGISTER         (char)0x01
+#define MSG_REQUEST_RFID     (char)0x10
+#define MSG_ROUND_COMPELETE  (char)0x11
+#define MSG_ROUND_START      (char)0x20
+#define MSG_ROUND_END        (char)0x21
+#define MSG_CUSTOM           (char)0x70
+#define MSG_CUSTOM_BROADCAST (char)0x71
 /** @} */
 
 #define COMM_MSG_BUF_LEN 30
