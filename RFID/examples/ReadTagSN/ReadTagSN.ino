@@ -36,9 +36,9 @@ static uint8_t sn[MAXRLEN], snBytes;
 void loop()
 {
 	delay(200);
-	if ((status = rfid.findTag(&card_type)) == STATUS_OK) {
-		Serial.print("OK! ");
-		Serial.println(card_type);
+	if ((status = rfid.findTag(&card_type)) == STATUS_OK &&
+	    card_type == 1024) {
+		Serial.print("Tag SN: ");
 		if ((status = rfid.readTagSN(sn, &snBytes)) == STATUS_OK) {
 			for (int i = 0; i < snBytes; ++i)
 				Serial.print(sn[i], HEX);
