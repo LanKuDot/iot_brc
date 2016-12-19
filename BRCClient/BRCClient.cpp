@@ -46,12 +46,6 @@ bool BRCClient::sendMessage(CommMsg *msg)
 			*ch = '\0';
 			break;
 
-		case MSG_REQUEST_RFID:
-			// 4-byte serial number.
-			memcpy(ch, msg->buffer, 4);
-			*(ch+4) = '\0';
-			break;
-
 		case MSG_ROUND_COMPLETE:
 			// No additional message
 			break;
@@ -61,6 +55,7 @@ bool BRCClient::sendMessage(CommMsg *msg)
 			memcpy(ch, msg->buffer, COMM_MSG_BUF_LEN);
 			break;
 
+		case MSG_REQUEST_RFID:
 		case MSG_CUSTOM_BROADCAST:
 			memcpy(ch, msg->buffer, COMM_MSG_BUF_LEN);
 			break;
@@ -88,9 +83,7 @@ bool BRCClient::receiveMessage(CommMsg *msg)
 			break;
 
 		case MSG_REQUEST_RFID:
-			// 2-byte coordination (x, y)
-			memcpy(msg->buffer, ch, 2);
-			(msg->buffer)[2] = '\0';
+			memcpy(msg->buffer, ch, COMM_MSG_BUF_LEN);
 			break;
 
 		case MSG_ROUND_START:
@@ -177,4 +170,16 @@ bool BRCClient::broadcast(const char *message)
 		return true;
 	else
 		return false;
+}
+
+void BRCClient::requestMapData(const uint8_t *sn, const char *customTag)
+{
+	CommMsg msg = {
+		.type = MSG_REQUEST_RFID
+	};
+	memcpy(msg.buffer, sn, 4);
+	strncat(msg.buffer, customTag, CUSTOM_TAG_LEN);
+
+	sendMessage(&msg);
+	delay(1);
 }

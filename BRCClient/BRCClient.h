@@ -7,6 +7,7 @@
 
 #include <KSM111_ESP8266.h>
 #include "CommMsg.h"
+#include "MapMsg.h"
 
 /**
  * @class BRCClient BRCClient.h <BRCClient.h>
@@ -100,6 +101,19 @@ class BRCClient : public KSM111_ESP8266
 		 * @param message The buffer of the message
 		 */
 		bool broadcast(const char *message);
+
+		/**
+		 * @brief Request the map data of the specfied serial number.
+		 *
+		 * If the requested serial number is vaild, BRC server will broadcast the map data to all clients.
+		 * Otherwise, BRC server will only send the map data marked invaild to the sender.
+		 *
+		 * @param sn The buffer storing the serial number
+		 * @param customTag The custom tag of the serial number.
+		 *        The length of customTag must be less than 23
+		 *        (null character included).
+		 */
+		void requestMapData(const uint8_t *sn, const char *customTag);
 
 	private:
 		/**
