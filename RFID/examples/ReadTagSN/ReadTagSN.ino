@@ -1,18 +1,22 @@
 #include <SPI.h>
 #include <RFID.h>
 
+// #define UNO
+
+/* The pin mapping of SPI */
 #ifdef UNO
  #define SPI_MOSI 11
  #define SPI_MISO 12
  #define SPI_SCLK 13
- #define SPI_SS   10
 #else
  #define SPI_MOSI 51
  #define SPI_MISO 50
  #define SPI_SCLK 52
- #define SPI_SS   53
 #endif
 
+// SPI_SS pin can be chosen by yourself
+// becasue we use SPI in master mode.
+#define SPI_SS   10
 #define MFRC522_RSTPD 9
 
 RFID rfid(SPI_SS, MFRC522_RSTPD);
@@ -21,7 +25,6 @@ void setup()
 {
 	SPI.begin();
 	SPI.beginTransaction(SPISettings(10000000L, MSBFIRST, SPI_MODE3));
-
 	rfid.begin();
 
 	Serial.begin(9600);
