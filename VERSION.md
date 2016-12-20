@@ -1,4 +1,9 @@
-**v1,2,2**
+**v1.3**
+- Features
+	- BRCClient: Add function to request the map data from the server
+	- BRCClient: Add example MapRequest
+
+**v1.2.2**
 - Fix
 	- CommMsg: Add type cast to the constant value
 	- COmmMsg: Fix typo of `MSG_ROUND_COMPLETE`
