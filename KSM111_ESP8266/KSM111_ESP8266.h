@@ -176,6 +176,12 @@ class KSM111_ESP8266 {
 		uint8_t beginClient(const char *type, const char *ip, const int port);
 
 		/**
+		 * @brief Check if the connection to the TCP server is still alive.
+		 * @return true if the connection is established.
+		 */
+		bool isClientConnected();
+
+		/**
 		 * @brief Disconnect from the server but not quiting AP. Th method spends 0.25 seconds.
 		 * @return True if successfully disconnected
 		 */
