@@ -172,13 +172,13 @@ bool BRCClient::broadcast(const char *message)
 		return false;
 }
 
-void BRCClient::requestMapData(const uint8_t *sn, const char *customTag)
+void BRCClient::requestMapData(const uint8_t *sn)
 {
 	CommMsg msg = {
 		.type = MSG_REQUEST_RFID
 	};
 	memcpy(msg.buffer, sn, 4);
-	strncat(msg.buffer, customTag, CUSTOM_TAG_LEN);
+	msg.buffer[4] = '\0';
 
 	sendMessage(&msg);
 	delay(1);

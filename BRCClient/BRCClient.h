@@ -108,12 +108,9 @@ class BRCClient : public KSM111_ESP8266
 		 * If the requested serial number is vaild, BRC server will broadcast the map data to all clients.
 		 * Otherwise, BRC server will only send the map data marked invaild to the sender.
 		 *
-		 * @param sn The buffer storing the serial number
-		 * @param customTag The custom tag of the serial number.
-		 *        The length of customTag must be less than 23
-		 *        (null character included).
+		 * @param sn The buffer storing the 4-byte serial number
 		 */
-		void requestMapData(const uint8_t *sn, const char *customTag);
+		void requestMapData(const uint8_t *sn);
 
 	private:
 		/**

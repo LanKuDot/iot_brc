@@ -70,7 +70,7 @@ void loop()
 
 	// If it read a serial number, reqeust the map data from server.
 	if (readTagSN()) {
-		brcClient.requestMapData(tagSN, "R");
+		brcClient.requestMapData(tagSN);
 	}
 
 	if (brcClient.receiveMessage(&msg)) {
@@ -82,9 +82,9 @@ void loop()
 			MapMsg map = rawDataToMapMsg(msg.buffer);
 
 			// Display the converted data.
-			sprintf(buf, "MAP: %02X%02X%02X%02X, (%02d, %02d), 0x%02X, %s",
+			sprintf(buf, "MAP: %02X%02X%02X%02X, (%02d, %02d), 0x%02X",
 					map.sn[0], map.sn[1], map.sn[2], map.sn[3],
-					map.x, map.y, map.type, map.customTag);
+					map.x, map.y, map.type);
 			Serial.println(buf);
 		}
 	}
