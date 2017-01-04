@@ -345,6 +345,32 @@ uint8_t KSM111_ESP8266::beginClient(const char *type, const char *ip, const int 
 		return CONNECT_ERROR;
 }
 
+bool KSM111_ESP8266::isClientConnected()
+{
+	char *ch = _buff;
+
+	_serial->println("AT+CIPSTATUS");
+	DEBUG_STR("AT+CIPSTATUS");
+	delay(20);
+
+	while (_serial->available()) {
+		*ch++ = _serial->read();
+		delay(1);
+	}
+	*ch = '\0';
+	DEBUG_STR(_buff);
+
+	// Get the status ID
+	ch = strstr(_buff, "STATUS:");
+	ch += 7;
+
+	// The status of ID 3 is "Connected".
+	if (*ch == '3')
+		return true;
+	else
+		return false;
+}
+
 bool KSM111_ESP8266::endClient()
 {
 	char *ch = _buff;

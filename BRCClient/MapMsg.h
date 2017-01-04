@@ -31,7 +31,6 @@ typedef struct MAP_MESSAGE {
 	int8_t x;		///< The x coordinate of a map block.
 	int8_t y;		///< The y coordinate of a map block.
 	char type;		///< The type of a map block.
-	char customTag[CUSTOM_TAG_LEN];	///< The custom tag for a map block. Reserve 1 byte for null character.
 } MapMsg;
 
 /**
@@ -53,7 +52,6 @@ static MapMsg rawDataToMapMsg(const char * const rawData)
 	mapMsg.x = ch[4];
 	mapMsg.y = ch[5];
 	mapMsg.type = ch[6];
-	strncpy(mapMsg.customTag, ch + 7, CUSTOM_TAG_LEN);
 
 	return mapMsg;
 }
