@@ -112,6 +112,13 @@ class BRCClient : public KSM111_ESP8266
 		 */
 		void requestMapData(const uint8_t *sn);
 
+		/**
+		 * @brief Tell the server that the action has completed.
+		 *
+		 * Send MSG_ROUND_COMPLETE to the server.
+		 */
+		void complete();
+
 	private:
 		/**
 		 * @brief The ID representing itself in the BRC server.

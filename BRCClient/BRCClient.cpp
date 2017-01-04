@@ -184,3 +184,13 @@ void BRCClient::requestMapData(const uint8_t *sn)
 	sendMessage(&msg);
 	delay(1);
 }
+
+void BRCClient::complete()
+{
+	CommMsg msg = {
+		.type = MSG_ROUND_COMPLETE
+	};
+
+	sendMessage(&msg);
+	delay(1);
+}
