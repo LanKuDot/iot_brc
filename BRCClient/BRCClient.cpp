@@ -83,6 +83,7 @@ bool BRCClient::receiveMessage(CommMsg *msg)
 			break;
 
 		case MSG_REQUEST_RFID:
+			msg->ID = 0x01;	// Data is sent from server.
 			memcpy(msg->buffer, ch, COMM_MSG_BUF_LEN);
 			break;
 
